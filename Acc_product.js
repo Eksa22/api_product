@@ -14,20 +14,20 @@ const Acc_product = db.define(
                 key: "user_id"
             },
         },
+        product_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
         admin_id: {
             type: DataTypes.SMALLINT,
             allowNull: true,
-            references: {
-                model: Admin,
-                key: "admin_id"
-            },
         },
         is_acc: {
-            type: DataTypes.STRING,
+            type: DataTypes.BOOLEAN,
             allowNull: false,
         },
         acc_date: {
-            type: DataTypes.STRING,
+            type: DataTypes.DATE,
             allowNull: true,
         },
         request_date: {
@@ -35,8 +35,8 @@ const Acc_product = db.define(
             allowNull: false,
         },
     }, {
-        timestamps: false
-    }
+    timestamps: false
+}
 )
 
 module.exports = Acc_product;

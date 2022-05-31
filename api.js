@@ -9,9 +9,9 @@ router.post('/products/request', async (req, res) => {
     try {
       await Acc_product.create({
         user_id: data.user_id,
-        is_acc: data.is_acc,
-        request_date: data.request_date,
-        acc_date: data.acc_date,
+        product_id: data.product_id,
+        is_acc: false,
+        request_date: Date.now(),
       }).then((data) =>
         res.status(200).json({
           status: true,
@@ -29,7 +29,7 @@ router.post('/products/request', async (req, res) => {
   });
 
 
-router.patch('/products/approve/:productId', async (req, res) => {
+router.patch('/products/approve/:requestId', async (req, res) => {
   try {
     const requestId = req.params.requestId;
     const result = await Acc_product.findByPk(requestId);
@@ -44,12 +44,9 @@ router.patch('/products/approve/:productId', async (req, res) => {
     }
 
     result.set({
-      status: true
-    }).save()
-
-    const user = await User.findByPk(result.user_id)
-    user.set({
-      is_seller: true
+      is_acc: true,
+      acc_date: Date.now(),
+      admin_id: 1,
     }).save()
 
     res.status(200).json({
